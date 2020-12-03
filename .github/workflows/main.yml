@@ -58,8 +58,8 @@ jobs:
     - name: Upload wdio-appium log
       uses: actions/upload-artifact@v1
       with:
-        name: wdio-appium.log
-        path: wdio-appium.log
+        name: appium.log
+        path: appium.log
 
     - name: Upload image result
       uses: actions/upload-artifact@v1
