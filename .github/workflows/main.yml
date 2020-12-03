@@ -50,8 +50,10 @@ jobs:
           until $(curl --output /dev/null --silent --head --fail http://0.0.0.0:4723/wd/hub/sessions); do
             sleep 5
           done
+
     - name: Run test script
       run: npm run test
+      continue-on-error: true
 
     - name: Upload wdio-appium log
       uses: actions/upload-artifact@v1
