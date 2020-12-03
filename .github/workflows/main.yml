@@ -28,39 +28,24 @@ jobs:
           rm -rf node_modules
           npm cache clean --force
           rm -rf package-lock.json
-    - name: Run Android Emulator
-      run: |
-          echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-29;default;x86'
-          echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n test_device -k 'system-images;android-29;default;x86' --force --device "Nexus 6"
-          echo $ANDROID_HOME/emulator/emulator -list-avds
-          echo "Starting emulator"
-          nohup $ANDROID_HOME/emulator/emulator -avd test_device -no-snapshot > /dev/null 2>&1 &
-          $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
-          $ANDROID_HOME/platform-tools/adb devices
-          echo "Emulator started"
-         # Start the Appium Server
     - name: Install Repo and Dependencies
-      run: |
-          npm install
-    - name: Start the Appium Server
-      run: ./node_modules/.bin/appium --address 0.0.0.0 --log-timestamp --log-no-colors --allow-insecure chromedriver_autodownload > appium.log &
-            # Poll for Appium Server to Start
-    - name: Poll for Appium Server to Start
-      run: |
-          until $(curl --output /dev/null --silent --head --fail http://0.0.0.0:4723/wd/hub/sessions); do
-            sleep 5
-          done
+      run: npm install
 
-    - name: Run test script
-      run: npm run test
-      continue-on-error: true
-
-    - name: Upload wdio-appium log
-      uses: actions/upload-artifact@v1
+    - name: run tests
+      uses: reactivecircus/android-emulator-runner@v2
       with:
-        name: appium.log
-        path: appium.log
+        api-level: 29
+        target: google_apis
+        arch: x86_64
+        profile: Nexus 6
+        script: npm test
 
+#    - name: Upload wdio-appium log
+#      uses: actions/upload-artifact@v1
+#      with:
+#        name: appium.log
+#        path: appium.log
+#
     - name: Upload image result
       uses: actions/upload-artifact@v1
       with:
