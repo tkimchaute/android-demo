@@ -51,7 +51,7 @@ exports.config = {
     platformName: 'Android',
     maxInstances: 1,
     'appium:deviceName': 'Nexus 6',
-    'appium:platformVersion': '10.0',
+    'appium:platformVersion': '11.0',
     'appium:orientation': 'PORTRAIT',
     'appium:browserName': 'chrome',
     'appium:automationName': 'UiAutomator2',
