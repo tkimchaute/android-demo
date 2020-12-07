@@ -36,7 +36,6 @@ jobs:
         run: |
           echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-29;default;x86'
           echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n test_device -k 'system-images;android-29;google_apis;x86_64' --force --device "Nexus 6"
-#          echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n test_device -k 'system-images;android-28;google_apis;x86_64' --abi google_apis/x86_64 --force
           echo "List emulator"
           $ANDROID_HOME/emulator/emulator -list-avds
           echo "Starting emulator"
