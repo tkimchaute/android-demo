@@ -50,7 +50,7 @@ exports.config = {
   capabilities: [{
     platformName: 'Android',
     maxInstances: 1,
-    'appium:deviceName': 'Nexus 6',
+    'appium:deviceName': 'test_device',
     'appium:platformVersion': '10.0',
     'appium:orientation': 'PORTRAIT',
     'appium:browserName': 'chrome',
@@ -63,7 +63,7 @@ exports.config = {
     // fullReset: false,
     'appium:newCommandTimeout': 180000,
     // newCommandTimeout: 30 * 60000,
-    mobileDeepLink: {url: "https://qasd-test.cybozu.com/k/m/25/", package: "com.android.chrome"}
+    // mobileDeepLink: {url: "https://qasd-test.cybozu.com/k/m/25/", package: "com.android.chrome"}
   }],
   //
   // ===================
