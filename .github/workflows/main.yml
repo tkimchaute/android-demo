@@ -15,11 +15,18 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '8.0.x' # The JDK version to make available on the path.
+          java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
+          architecture: x64 # (x64 or x86) - defaults to x64
+
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
@@ -32,12 +39,19 @@ jobs:
           rm -rf package-lock.json
       - name: Set up Appium
         run: npm install -g appium --chromedriver_version="74.0.3729.6"
-      - name: Run Android Emulator
+      - name: Check java version
+        run: java --version
+      - name: Install Android Emulator
         run: |
           echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-29;google_apis;x86_64'
           echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n test_device -k 'system-images;android-29;google_apis;x86_64' --force --device "Nexus 6"
+      - name: Create Device
+        run: |
+          echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n test_device -k 'system-images;android-29;google_apis;x86_64' --force --device "Nexus 6"
           echo "List emulator"
           $ANDROID_HOME/emulator/emulator -list-avds
+      - name: Start emulator
+        run: |
           echo "Starting emulator"
           nohup $ANDROID_HOME/emulator/emulator -avd test_device -no-snapshot > /dev/null 2>&1 &
           $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
@@ -45,17 +59,9 @@ jobs:
           echo "Emulator started"
           $ANDROID_HOME/platform-tools/adb -P 5037 -s emulator-5554 shell dumpsys package com.android.chrome
           # Start the Appium Server
-      - name: Install Repo and Dependencies
+      - name: Install dependencies
         run: |
           npm install
-#      - name: Start the Appium Server
-#        run: ./node_modules/.bin/appium --address 0.0.0.0 --log-timestamp --log-no-colors --allow-insecure chromedriver_autodownload > appium.log &
-        # Poll for Appium Server to Start
-#      - name: Poll for Appium Server to Start
-#        run: |
-#          until $(curl --output /dev/null --silent --head --fail http://0.0.0.0:4723/wd/hub/sessions); do
-#            sleep 5
-#          done
 
       - name: Run test script
         run: npm run test
