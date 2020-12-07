@@ -43,8 +43,7 @@ jobs:
 #        run: java -v
       - name: Install Android Emulator
         run: |
-          echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-29;google_apis;x86'
-          echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n test_device -k 'system-images;android-29;google_apis;x86_64' --force --device "Nexus 6"
+          echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-29;google_apis;x86_64'
       - name: Create Device
         run: |
           echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n test_device -k 'system-images;android-29;google_apis;x86_64' --force --device "Nexus 6"
@@ -53,7 +52,7 @@ jobs:
       - name: Start emulator
         run: |
           echo "Starting emulator"
-          nohup sh $ANDROID_HOME/emulator/emulator -avd test_device -no-snapshot > /dev/null 2>&1 &
+          nohup $ANDROID_HOME/emulator/emulator -avd test_device -no-snapshot > /dev/null 2>&1 &
       - name: Sleep and check
         run: |
           sleep 60
