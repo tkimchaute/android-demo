@@ -48,8 +48,6 @@ exports.config = {
   // https://docs.saucelabs.com/reference/platforms-configurator
   //
   capabilities: [{
-    // path: '/wd/hub',
-    // port: 4723,
     platformName: 'Android',
     maxInstances: 1,
     'appium:deviceName': 'test_device',
@@ -57,15 +55,7 @@ exports.config = {
     'appium:orientation': 'PORTRAIT',
     'appium:browserName': 'chrome',
     'appium:automationName': 'UiAutomator2',
-    // 'appium:androidPackage': "com.android.chrome",
-    // "androidDeviceSerial": "emulator-5554",
-    // ensureWebviewsHavePages: true,
-    // nativeWebScreenshot: true,
-    // 'appium:noReset': true,
-    // fullReset: true,
     'appium:newCommandTimeout': 180000,
-    // newCommandTimeout: 30 * 60000,
-    // mobileDeepLink: {url: "https://qasd-test.cybozu.com/k/m/25/", package: "com.android.chrome"}
   }],
   //
   // ===================
