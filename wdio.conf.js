@@ -59,7 +59,7 @@ exports.config = {
     // "androidDeviceSerial": "emulator-5554",
     // ensureWebviewsHavePages: true,
     // nativeWebScreenshot: true,
-    // noReset: true,
+    noReset: true,
     // fullReset: false,
     'appium:newCommandTimeout': 180000,
     // newCommandTimeout: 30 * 60000,
