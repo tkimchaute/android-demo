@@ -48,8 +48,8 @@ exports.config = {
   // https://docs.saucelabs.com/reference/platforms-configurator
   //
   capabilities: [{
-    path: '/wd/hub',
-    port: 4723,
+    // path: '/wd/hub',
+    // port: 4723,
     platformName: 'Android',
     maxInstances: 1,
     'appium:deviceName': 'test_device',
