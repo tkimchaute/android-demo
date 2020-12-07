@@ -57,6 +57,15 @@ jobs:
           sleep 120
           $ANDROID_HOME/platform-tools/adb devices
           echo "Emulator started"
+      - name: restart
+        run: |
+          echo "Check Emulator started"
+          $ANDROID_HOME/platform-tools/adb kill-server
+          $ANDROID_HOME/platform-tools/adb start-server
+          sleep 60
+          echo "Rechec Emulator started"
+          $ANDROID_HOME/platform-tools/adb devices
+
       - name: Install dependencies
         run: |
           npm install
