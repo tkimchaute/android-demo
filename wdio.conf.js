@@ -63,9 +63,8 @@ exports.config = {
     // fullReset: false,
     'appium:newCommandTimeout': 180000,
     // newCommandTimeout: 30 * 60000,
-    // mobileDeepLink: {url: "https://www.hbr0a.kintone.com/", package: "com.android.chrome"}
-  },
-  ],
+    mobileDeepLink: {url: "https://qasd-test.cybozu.com/k/m/25/", package: "com.android.chrome"}
+  }],
   //
   // ===================
   // Test Configurations
