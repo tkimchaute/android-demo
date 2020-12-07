@@ -52,7 +52,7 @@ jobs:
         run: |
           echo "Starting emulator"
           $ANDROID_HOME/platform-tools/adb kill-server
-          nohup $ANDROID_HOME/emulator/emulator -avd test_device -no-snapshot > /dev/null 2>&1 &
+          nohup $ANDROID_HOME/emulator/emulator -avd test_device -port 5557 -no-snapshot > /dev/null 2>&1 &
       - name: Sleep and check
         run: |
           sleep 90
