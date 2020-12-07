@@ -31,7 +31,7 @@ jobs:
           npm cache clean --force
           rm -rf package-lock.json
       - name: Set up Appium
-        run: npm install -g appium --chromedriver_version="86.0.4240.22"
+        run: npm install -g appium --chromedriver_version="74.0.3729.6"
       - name: Run Android Emulator
         run: |
           echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-29;google_apis;x86_64'
@@ -43,6 +43,7 @@ jobs:
           $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
           $ANDROID_HOME/platform-tools/adb devices
           echo "Emulator started"
+          $ANDROID_HOME/platform-tools/adb -P 5037 -s emulator-5554 shell dumpsys package com.android.chrome
           # Start the Appium Server
       - name: Install Repo and Dependencies
         run: |
