@@ -55,7 +55,7 @@ exports.config = {
     'appium:orientation': 'PORTRAIT',
     'appium:browserName': 'chrome',
     'appium:automationName': 'UiAutomator2',
-    // "androidPackage": "com.android.chrome",
+    "androidPackage": "com.android.chrome",
     // "androidDeviceSerial": "emulator-5554",
     // ensureWebviewsHavePages: true,
     // nativeWebScreenshot: true,
