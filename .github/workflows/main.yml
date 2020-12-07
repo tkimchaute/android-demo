@@ -56,11 +56,9 @@ jobs:
           nohup $ANDROID_HOME/emulator/emulator -avd test_device -no-snapshot > /dev/null 2>&1 &
       - name: Sleep and check
         run: |
-          sleep 20
+          sleep 60
           $ANDROID_HOME/platform-tools/adb devices
           echo "Emulator started"
-          $ANDROID_HOME/platform-tools/adb -P 5037 -s emulator-5554 shell dumpsys package com.android.chrome
-          # Start the Appium Server
       - name: Install dependencies
         run: |
           npm install
