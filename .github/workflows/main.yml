@@ -30,8 +30,6 @@ jobs:
           rm -rf node_modules
           npm cache clean --force
           rm -rf package-lock.json
-      - name: Check java
-        run: java --version
       - name: Set up Appium
         run: npm install -g appium
       - name: Run Android Emulator
