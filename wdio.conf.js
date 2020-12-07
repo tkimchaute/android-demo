@@ -55,15 +55,15 @@ exports.config = {
     'appium:orientation': 'PORTRAIT',
     'appium:browserName': 'chrome',
     'appium:automationName': 'UiAutomator2',
-    "androidPackage": "com.android.chrome",
+    'appium:androidPackage': "com.android.chrome",
     // "androidDeviceSerial": "emulator-5554",
     // ensureWebviewsHavePages: true,
     // nativeWebScreenshot: true,
-    noReset: true,
+    'appium:noReset': true,
     // fullReset: false,
     'appium:newCommandTimeout': 180000,
     // newCommandTimeout: 30 * 60000,
-    // mobileDeepLink: {url: "https://qasd-test.cybozu.com/k/m/25/", package: "com.android.chrome"}
+    mobileDeepLink: {url: "https://qasd-test.cybozu.com/k/m/25/", package: "com.android.chrome"}
   }],
   //
   // ===================
