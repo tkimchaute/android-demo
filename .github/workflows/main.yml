@@ -31,7 +31,7 @@ jobs:
           npm cache clean --force
           rm -rf package-lock.json
       - name: Set up Appium
-        run: npm install -g appium then run appium -p 4723 --allow-insecure chromedriver_autodownload
+        run: npm install -g appium --chromedriver_version="86.0.4240.22"
       - name: Run Android Emulator
         run: |
           echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-29;default;x86'
