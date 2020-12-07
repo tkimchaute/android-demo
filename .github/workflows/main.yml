@@ -51,20 +51,15 @@ jobs:
       - name: Start emulator
         run: |
           echo "Starting emulator"
+          $ANDROID_HOME/platform-tools/adb kill-server
           nohup $ANDROID_HOME/emulator/emulator -avd test_device -no-snapshot > /dev/null 2>&1 &
       - name: Sleep and check
         run: |
-          sleep 120
+          sleep 90
+          $ANDROID_HOME/platform-tools/adb start-server
+          sleep 30
           $ANDROID_HOME/platform-tools/adb devices
           echo "Emulator started"
-      - name: restart
-        run: |
-          echo "Check Emulator started"
-          $ANDROID_HOME/platform-tools/adb kill-server
-          $ANDROID_HOME/platform-tools/adb start-server
-          sleep 60
-          echo "Rechec Emulator started"
-          $ANDROID_HOME/platform-tools/adb devices
 
       - name: Install dependencies
         run: |
