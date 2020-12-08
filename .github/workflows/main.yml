@@ -26,20 +26,20 @@ jobs:
           java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
           architecture: x64 # (x64 or x86) - defaults to x64
 
-      - name: Use Node.js
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12.x'
-
-        # Clean Packages & Install Dependencies
-      - name: Clean Packages
-        run: |
-          rm -rf node_modules
-          npm cache clean --force
-          rm -rf package-lock.json
+#      - name: Use Node.js
+#        uses: actions/setup-node@v1
+#        with:
+#          node-version: '12.x'
+#
+#        # Clean Packages & Install Dependencies
+#      - name: Clean Packages
+#        run: |
+#          rm -rf node_modules
+#          npm cache clean --force
+#          rm -rf package-lock.json
 
       - name: Check kvm
-        run: egrep -c '(vmx|svm)' /proc/cpuinfo
+        run: sudo egrep -c '(vmx|svm)' /proc/cpuinfo
 
 #      - name: Install kvm
 #        run: |
