@@ -44,7 +44,7 @@ jobs:
       - name: Install kvm
         run: |
           echo "Y" | sudo apt-get install cpu-checker
-          kvm-ok
+          sudo /usr/sbin/kvm-ok
 
 #      - name: Set up Appium
 #        run: npm install -g appium --chromedriver_version="74.0.3729.6"
