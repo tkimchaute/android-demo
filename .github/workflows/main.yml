@@ -39,10 +39,14 @@ jobs:
           rm -rf package-lock.json
 
       - name: Check kvm
-        run: |
+        run: egrep -c '(vmx|svm)' /proc/cpuinfo
+
+#      - name: Install kvm
+#        run: |
 #          sudo apt-get install cpu-checker
-          egrep -c '(vmx|svm)' /proc/cpuinfo
+#          egrep -c '(vmx|svm)' /proc/cpuinfo
 #          sudo kvm-ok
+
 #      - name: Set up Appium
 #        run: npm install -g appium --chromedriver_version="74.0.3729.6"
 #
