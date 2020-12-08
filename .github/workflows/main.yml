@@ -40,9 +40,9 @@ jobs:
 
       - name: Check kvm
         run: |
-          sudo apt-get install cpu-checker
+#          sudo apt-get install cpu-checker
           egrep -c '(vmx|svm)' /proc/cpuinfo
-          kvm-ok
+#          sudo kvm-ok
 #      - name: Set up Appium
 #        run: npm install -g appium --chromedriver_version="74.0.3729.6"
 #
