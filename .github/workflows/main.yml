@@ -38,9 +38,9 @@ jobs:
 #          npm cache clean --force
 #          rm -rf package-lock.json
 
-      - name: Check kvm
-        run: egrep '(vmx|svm)' --color=always /proc/cpuinfo
-
+#      - name: Check kvm
+#        run: egrep '(vmx|svm)' --color=always /proc/cpuinfo
+#
       - name: Install kvm
         run: |
           echo "Y" | sudo apt-get install cpu-checker
