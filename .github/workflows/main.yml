@@ -45,13 +45,14 @@ jobs:
           echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-29;google_apis;x86_64'
       - name: Create Device
         run: |
-          echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n test_device -k 'system-images;android-29;google_apis;x86_64' --force --device "Nexus 6"
+          echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n test_device -k 'system-images;android-29;google_apis;x86_64'
           echo "List emulator"
           $ANDROID_HOME/emulator/emulator -list-avds
       - name: Start emulator
         run: |
           echo "Starting emulator"
           $ANDROID_HOME/platform-tools/adb kill-server
+          sleep 10
           nohup $ANDROID_HOME/emulator/emulator -avd test_device -port 5557 -no-snapshot > /dev/null 2>&1 &
       - name: Sleep and check
         run: |
