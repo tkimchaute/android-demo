@@ -38,52 +38,57 @@ jobs:
           npm cache clean --force
           rm -rf package-lock.json
 
-      - name: Set up Appium
-        run: npm install -g appium --chromedriver_version="74.0.3729.6"
-
-      - name: Install Android Emulator
+      - name: Check kvm
         run: |
-          echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-29;google_apis;x86_64'
-      - name: Create Device
-        run: |
-          echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n test_device -k 'system-images;android-29;google_apis;x86_64' --force --device "Nexus 10"
-          echo "List emulator"
-          $ANDROID_HOME/emulator/emulator -list-avds
-      - name: Start emulator
-        run: |
-          echo "Starting emulator"
-          $ANDROID_HOME/platform-tools/adb kill-server
-          sleep 10
-          nohup $ANDROID_HOME/emulator/emulator -avd test_device -netdelay none -netspeed full > /dev/null 2>&1 &
-      - name: Sleep and check
-        run: |
-          sleep 90
-          $ANDROID_HOME/platform-tools/adb start-server
-          sleep 30
-          $ANDROID_HOME/platform-tools/adb devices
-          echo "Emulator started"
-
-      - name: Install dependencies
-        run: |
-          npm install
-
-      - name: check
-        run: |
-          echo "Check Emulator started"
-          $ANDROID_HOME/platform-tools/adb devices
-
-      - name: Run test script
-        run: npm run test
-        continue-on-error: true
-
-      - name: Upload wdio-appium log
-        uses: actions/upload-artifact@v1
-        with:
-          name: wdio-appium.log
-          path: wdio-appium.log
-
-      - name: Upload image result
-        uses: actions/upload-artifact@v1
-        with:
-          name: result
-          path: .tmp
+          sudo apt-get install cpu-checker
+          egrep -c '(vmx|svm)' /proc/cpuinfo
+          kvm-ok
+#      - name: Set up Appium
+#        run: npm install -g appium --chromedriver_version="74.0.3729.6"
+#
+#      - name: Install Android Emulator
+#        run: |
+#          echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-29;google_apis;x86_64'
+#      - name: Create Device
+#        run: |
+#          echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n test_device -k 'system-images;android-29;google_apis;x86_64' --force --device "Nexus 10"
+#          echo "List emulator"
+#          $ANDROID_HOME/emulator/emulator -list-avds
+#      - name: Start emulator
+#        run: |
+#          echo "Starting emulator"
+#          $ANDROID_HOME/platform-tools/adb kill-server
+#          sleep 10
+#          nohup $ANDROID_HOME/emulator/emulator -avd test_device -netdelay none -netspeed full > /dev/null 2>&1 &
+#      - name: Sleep and check
+#        run: |
+#          sleep 90
+#          $ANDROID_HOME/platform-tools/adb start-server
+#          sleep 30
+#          $ANDROID_HOME/platform-tools/adb devices
+#          echo "Emulator started"
+#
+#      - name: Install dependencies
+#        run: |
+#          npm install
+#
+#      - name: check
+#        run: |
+#          echo "Check Emulator started"
+#          $ANDROID_HOME/platform-tools/adb devices
+#
+#      - name: Run test script
+#        run: npm run test
+#        continue-on-error: true
+#
+#      - name: Upload wdio-appium log
+#        uses: actions/upload-artifact@v1
+#        with:
+#          name: wdio-appium.log
+#          path: wdio-appium.log
+#
+#      - name: Upload image result
+#        uses: actions/upload-artifact@v1
+#        with:
+#          name: result
+#          path: .tmp
