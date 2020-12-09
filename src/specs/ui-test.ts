@@ -1,4 +1,4 @@
-import { expect } from 'chai';
+// import { expect } from 'chai';
 
 describe('Index', () => {
   before(() => {
@@ -17,6 +17,7 @@ describe('Index', () => {
   it('should save some screenshots', () => {
     // browser.saveScreen('examplePaged', { /* some options*/ });
     // Save a full page screenshot
+    browser.pause(5000);
     browser.saveFullPageScreen('index-fullPage');
     browser.pause(5000);
 
@@ -28,10 +29,10 @@ describe('Index', () => {
   it('should compare successful with a baseline', () => {
 
     // Check a full page screenshot
-    expect(browser.checkFullPageScreen('index-fullPage', { /* some options */})).to.equal(0);
+    expect(browser.checkFullPageScreen('index-fullPage', { /* some options */})).toEqual(0);
     browser.pause(5000);
     // Check a full page screenshot with all tab executions
-    expect(browser.checkTabbablePage('index-tabbable', { /* some options, use the same options as for checkFullPageScreen */})).to.equal(0);
+    expect(browser.checkTabbablePage('index-tabbable', { /* some options, use the same options as for checkFullPageScreen */})).toEqual(0);
     browser.pause(5000);
   });
 });
