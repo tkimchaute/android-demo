@@ -42,7 +42,17 @@ jobs:
 #        run: egrep '(vmx|svm)' --color=always /proc/cpuinfo
 #
       - name: Install kvm
-        run: egrep -c ' lm ' /proc/cpuinfo
+        run: |
+          sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
+          sudo apt-get install qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils
+          sudo aptitude install kvm libvirt-bin ubuntu-vm-builder bridge-utils
+          sudo adduser `id -un` libvirtd
+          sudo adduser `id -un` libvirt
+          sudo adduser `id -un` kvm
+      - name: Reboot and check
+        run: |
+          reboot
+          virsh list --all
 
 #      - name: Set up Appium
 #        run: npm install -g appium --chromedriver_version="74.0.3729.6"
