@@ -17,20 +17,23 @@ describe('Index', () => {
   it('should save some screenshots', () => {
     // browser.saveScreen('examplePaged', { /* some options*/ });
     // Save a full page screenshot
-    browser.saveFullPageScreen('index-fullPage', { fullPageScrollTimeout: 10000 });
+    browser.saveFullPageScreen('index-fullPage');
+    browser.pause(5000);
 
     // Save a full page screenshot with all tab executions
-    // browser.saveTabbablePage('index-tabbable', { /* some options, use the same options as for saveFullPageScreen */ });
+    browser.saveTabbablePage('index-tabbable', { /* some options, use the same options as for saveFullPageScreen */});
+    browser.pause(5000);
   });
 
-  // it('should compare successful with a baseline', () => {
-  //     // Check a full page screenshot
-  //     expect(browser.checkFullPageScreen('index-fullPage', { /* some options */ })).to.equal(0);
+  it('should compare successful with a baseline', () => {
 
-  //     // // Check a full page screenshot with all tab executions
-  //     // expect(browser.checkTabbablePage('index-tabbable', { /* some options, use the same options as for checkFullPageScreen */ })).to.equal(0);
-  // }
-  // );
+    // Check a full page screenshot
+    expect(browser.checkFullPageScreen('index-fullPage', { /* some options */})).to.equal(0);
+    browser.pause(5000);
+    // Check a full page screenshot with all tab executions
+    expect(browser.checkTabbablePage('index-tabbable', { /* some options, use the same options as for checkFullPageScreen */})).to.equal(0);
+    browser.pause(5000);
+  });
 });
 
 // describe('Create', () => {
