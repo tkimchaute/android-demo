@@ -51,11 +51,12 @@ exports.config = {
     platformName: 'Android',
     maxInstances: 1,
     'appium:deviceName': 'test_device',
-    'appium:platformVersion': '10.0',
+    'appium:platformVersion': '11.0',
     'appium:orientation': 'PORTRAIT',
     'appium:browserName': 'chrome',
     'appium:automationName': 'UiAutomator2',
     'appium:newCommandTimeout': 180000,
+    nativeWebScreenshot: true,
   }],
   //
   // ===================
@@ -111,10 +112,10 @@ exports.config = {
   services: [
     [
       'appium', {
-      logPath : './',
-      args: {},
-      command: 'appium',
-    }
+        logPath : './',
+        args: {},
+        command: 'appium',
+      }
     ],
     ['image-comparison', {
       // 基準となる画像を保存するフォルダ
