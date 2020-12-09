@@ -42,7 +42,7 @@ jobs:
 #        run: egrep '(vmx|svm)' --color=always /proc/cpuinfo
 #
       - name: Install kvm
-        run: uname -m
+        run: egrep -c ' lm ' /proc/cpuinfo
 
 #      - name: Set up Appium
 #        run: npm install -g appium --chromedriver_version="74.0.3729.6"
