@@ -2,20 +2,22 @@ import { expect } from 'chai';
 
 describe('Index', () => {
   before(() => {
-    browser.url('https://qasd-test.cybozu.com/k/m/25/');
-    browser.$("div.form-username-slash input[name='username']").setValue("admin");
-    browser.$("div.form-password-slash input[name='password']").setValue("qasd@123");
-    $('input.login-button').click();
-    const localSettingForDisableWelcomeInfo = 'window.localStorage.setItem("gaia.1::com.cybozu.kintone.mobile.LocalSetting", \'{"v2NavigationPanelButtonTooltipDisplayed":true,"v2WelcomeDialogDisplayed":true}\')';
-    browser.executeScript(localSettingForDisableWelcomeInfo, [])
-    // $('button.gaia-mobile-v2-ui-welcomedialog-close-button').click()
-    // $('.gaia-mobile-v2-ui-tooltip-navigation-panel-button .gaia-mobile-v2-ui-tooltip-closebutton').click();
+    browser.url(`https://${process.env.DOMAIN}/k/m/717/`);
+    browser.$("div.form-username-slash input[name='username']").setValue(`${process.env.USERNAME}`);
+    browser.$("div.form-password-slash input[name='password']").setValue(`${process.env.PASSWORD}`);
+    browser.$('input.login-button').click();
+    browser.pause(10000);
+    // const localSettingForDisableWelcomeInfo = 'window.localStorage.setItem("gaia.1::com.cybozu.kintone.mobile.LocalSetting", \'{"v2NavigationPanelButtonTooltipDisplayed":true,"v2WelcomeDialogDisplayed":true}\')';
+    // browser.executeScript(localSettingForDisableWelcomeInfo, [])
+    browser.$('button.gaia-mobile-v2-ui-welcomedialog-close-button').click();
+    browser.pause(5000)
+    browser.$('button.gaia-mobile-v2-ui-tooltip-closebutton').click();
   });
 
   it('should save some screenshots', () => {
     // browser.saveScreen('examplePaged', { /* some options*/ });
     // Save a full page screenshot
-    browser.saveFullPageScreen('index-fullPage', { fullPageScrollTimeout: 3000 });
+    browser.saveFullPageScreen('index-fullPage', { fullPageScrollTimeout: 10000 });
 
     // Save a full page screenshot with all tab executions
     // browser.saveTabbablePage('index-tabbable', { /* some options, use the same options as for saveFullPageScreen */ });

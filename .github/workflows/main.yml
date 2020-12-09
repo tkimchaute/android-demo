@@ -15,92 +15,52 @@ jobs:
   # This workflow contains a single job called "build"
   build:
     # The type of runner that the job will run on
-    runs-on: ubuntu-20.04
+    runs-on: macOS-latest
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
+      - name: Use Node.js
+        uses: actions/setup-node@v1
         with:
-          java-version: '8.0.x' # The JDK version to make available on the path.
-          java-package: jdk # (jre, jdk, or jdk+fx) - defaults to jdk
-          architecture: x64 # (x64 or x86) - defaults to x64
+          node-version: '12.x'
 
-#      - name: Use Node.js
-#        uses: actions/setup-node@v1
-#        with:
-#          node-version: '12.x'
-#
-#        # Clean Packages & Install Dependencies
-#      - name: Clean Packages
-#        run: |
-#          rm -rf node_modules
-#          npm cache clean --force
-#          rm -rf package-lock.json
-
-#      - name: Check kvm
-#        run: egrep '(vmx|svm)' --color=always /proc/cpuinfo
-#
-      - name: Install kvm
+        # Clean Packages & Install Dependencies
+      - name: Clean Packages
         run: |
-          sudo apt-get update
-          sudo apt-get install qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils
-          sudo apt-get install qemu-kvm libvirt-bin ubuntu-vm-builder bridge-utils
-          sudo aptitude install kvm libvirt-bin ubuntu-vm-builder bridge-utils
-          sudo adduser `id -un` libvirtd
-          sudo adduser `id -un` libvirt
-          sudo adduser `id -un` kvm
-      - name: Reboot and check
+          rm -rf node_modules
+          npm cache clean --force
+          rm -rf package-lock.json
+      - name: Install Appium
+        run: npm install -g appium --chromedriver_version="74.0.3729.6"
+      - name: Install and Run Android Emulator
         run: |
-          reboot
-          virsh list --all
+          echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-29;google_apis;x86_64'
+          echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n test_device -k 'system-images;android-29;google_apis;x86_64' --force --device "Nexus 6"
+          echo "List emulator"
+          $ANDROID_HOME/emulator/emulator -list-avds
+          echo "Starting emulator"
+          nohup $ANDROID_HOME/emulator/emulator -avd test_device -no-snapshot > /dev/null 2>&1 &
+          $ANDROID_HOME/platform-tools/adb wait-for-device shell 'while [[ -z $(getprop sys.boot_completed | tr -d '\r') ]]; do sleep 1; done; input keyevent 82'
+          $ANDROID_HOME/platform-tools/adb devices
+          echo "Emulator started"
+          $ANDROID_HOME/platform-tools/adb -P 5037 -s emulator-5554 shell dumpsys package com.android.chrome
+          # Start the Appium Server
+      - name: Install dependencies
+        run: npm install
 
-#      - name: Set up Appium
-#        run: npm install -g appium --chromedriver_version="74.0.3729.6"
-#
-#      - name: Install Android Emulator
-#        run: |
-#          echo "y" | $ANDROID_HOME/tools/bin/sdkmanager --install 'system-images;android-29;google_apis;x86_64'
-#      - name: Create Device
-#        run: |
-#          echo "no" | $ANDROID_HOME/tools/bin/avdmanager create avd -n test_device -k 'system-images;android-29;google_apis;x86_64' --force --device "Nexus 10"
-#          echo "List emulator"
-#          $ANDROID_HOME/emulator/emulator -list-avds
-#      - name: Start emulator
-#        run: |
-#          echo "Starting emulator"
-#          $ANDROID_HOME/platform-tools/adb kill-server
-#          sleep 10
-#          nohup $ANDROID_HOME/emulator/emulator -avd test_device -netdelay none -netspeed full > /dev/null 2>&1 &
-#      - name: Sleep and check
-#        run: |
-#          sleep 90
-#          $ANDROID_HOME/platform-tools/adb start-server
-#          sleep 30
-#          $ANDROID_HOME/platform-tools/adb devices
-#          echo "Emulator started"
-#
-#      - name: Install dependencies
-#        run: |
-#          npm install
-#
-#      - name: check
-#        run: |
-#          echo "Check Emulator started"
-#          $ANDROID_HOME/platform-tools/adb devices
-#
-#      - name: Run test script
-#        run: npm run test
-#        continue-on-error: true
-#
-#      - name: Upload wdio-appium log
-#        uses: actions/upload-artifact@v1
-#        with:
-#          name: wdio-appium.log
-#          path: wdio-appium.log
-#
-#      - name: Upload image result
-#        uses: actions/upload-artifact@v1
-#        with:
-#          name: result
-#          path: .tmp
+      - name: Run test script
+        run: npm run test
+        continue-on-error: true
+
+      - name: Upload wdio-appium log
+        uses: actions/upload-artifact@v1
+        with:
+          name: wdio-appium.log
+          path: wdio-appium.log
+
+      - name: Upload image result
+        uses: actions/upload-artifact@v1
+        with:
+          name: result
+          path: .tmp
