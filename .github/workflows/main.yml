@@ -42,10 +42,7 @@ jobs:
 #        run: egrep '(vmx|svm)' --color=always /proc/cpuinfo
 #
       - name: Install kvm
-        run: |
-          echo "Y" | sudo apt-get install cpu-checker
-          sudo /usr/sbin/kvm-ok
-          uname -m
+        run: uname -m
 
 #      - name: Set up Appium
 #        run: npm install -g appium --chromedriver_version="74.0.3729.6"
