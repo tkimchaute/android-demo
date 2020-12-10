@@ -57,6 +57,7 @@ exports.config = {
     'appium:automationName': 'UiAutomator2',
     'appium:newCommandTimeout': 180000,
     nativeWebScreenshot: true,
+    phoneOnly: true,
   }],
   //
   // ===================
