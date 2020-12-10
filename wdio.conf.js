@@ -57,7 +57,6 @@ exports.config = {
     'appium:automationName': 'UiAutomator2',
     'appium:newCommandTimeout': 180000,
     nativeWebScreenshot: true,
-    phoneOnly: true,
   }],
   //
   // ===================
@@ -108,7 +107,7 @@ exports.config = {
   // your test setup with almost no effort. Unlike plugins, they don't add new
   // commands. Instead, they hook themselves up into the test process.
   // services: ['chromedriver'],
-  host: 'localhost', // default appium port
+  host: 'localhost',
   port: 4723,
   services: [
     [
