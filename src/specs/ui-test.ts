@@ -3,7 +3,7 @@
 describe('Index', () => {
   before(() => {
     browser.url(`https://${process.env.DOMAIN}/k/m/717/`);
-    const localSettingForDisableWelcomeInfo = 'window.localStorage.setItem("gaia.2::com.cybozu.kintone.mobile.LocalSetting", \'{"v2NavigationPanelButtonTooltipDisplayed":true,"v2WelcomeDialogDisplayed":true}\')';
+    const localSettingForDisableWelcomeInfo = 'window.localStorage.setItem("gaia.8::com.cybozu.kintone.mobile.LocalSetting", \'{"v2NavigationPanelButtonTooltipDisplayed":true,"v2WelcomeDialogDisplayed":true}\')';
     browser.executeScript(localSettingForDisableWelcomeInfo, [])
     browser.$("div.form-username-slash input[name='username']").setValue(`${process.env.USERNAME}`);
     browser.$("div.form-password-slash input[name='password']").setValue(`${process.env.PASSWORD}`);
@@ -18,11 +18,11 @@ describe('Index', () => {
     // browser.saveScreen('examplePaged', { /* some options*/ });
     // Save a full page screenshot
     browser.pause(5000);
-    browser.saveFullPageScreen('index-fullPage');
+    browser.saveFullPageScreen('index-fullPage',{ fullPageScrollTimeout: 3000 });
     browser.pause(5000);
 
     // Save a full page screenshot with all tab executions
-    browser.saveTabbablePage('index-tabbable', { /* some options, use the same options as for saveFullPageScreen */});
+    browser.saveTabbablePage('index-tabbable',{});
     browser.pause(5000);
   });
 

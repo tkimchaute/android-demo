@@ -50,10 +50,10 @@ exports.config = {
   capabilities: [{
     platformName: 'Android',
     maxInstances: 1,
-    'appium:deviceName': 'test_device',
-    'appium:platformVersion': '10.0',
+    'appium:deviceName': process.env.DEVICE_NAME || 'Nexus_6_API_30',
+    'appium:platformVersion': process.env.PLATFORM_VERSION || '11.0',
     'appium:orientation': 'PORTRAIT',
-    'appium:browserName': 'chrome',
+    'appium:browserName': process.env.BROWSER_NAME || 'chrome',
     'appium:automationName': 'UiAutomator2',
     'appium:newCommandTimeout': 180000,
     nativeWebScreenshot: true,
@@ -133,6 +133,7 @@ exports.config = {
       blockOutStatusBar: true,
       // ブラウザのツールバーを表示するかどうか
       blockOutToolBar: true,
+      // disableCSSAnimation: true
     }],
   ],
 
