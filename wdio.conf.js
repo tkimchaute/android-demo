@@ -48,15 +48,15 @@ exports.config = {
   // https://docs.saucelabs.com/reference/platforms-configurator
   //
   capabilities: [{
-    platformName: 'Android',
     maxInstances: 1,
-    'appium:deviceName': process.env.DEVICE_NAME || 'Nexus_6_API_30',
+    platformName: 'Android',
+    deviceName: process.env.DEVICE_NAME || 'Nexus 6',
+    browserName: process.env.BROWSER_NAME || 'chrome',
     'appium:platformVersion': process.env.PLATFORM_VERSION || '11.0',
     'appium:orientation': 'PORTRAIT',
-    'appium:browserName': process.env.BROWSER_NAME || 'chrome',
     'appium:automationName': 'UiAutomator2',
     'appium:newCommandTimeout': 180000,
-    nativeWebScreenshot: true,
+    nativeWebScreenshot: true
   }],
   //
   // ===================
@@ -113,17 +113,17 @@ exports.config = {
     [
       'appium', {
         logPath : './',
-        args: {},
         command: 'appium',
+        args: {},
       }
     ],
     ['image-comparison', {
       // 基準となる画像を保存するフォルダ
-      baselineFolder: join(process.cwd(), './tests/sauceLabsBaseline/'),
+      baselineFolder: join(process.cwd(), './resources/baseline/android_browser/'),
       // 保存する画像のファイル名のフォーマット
       formatImageName: '{tag}-{logName}-{width}x{height}',
       // テスト実行時に保存される画像を保存するフォルダ
-      screenshotPath: join(process.cwd(), '.tmp/'),
+      screenshotPath: join(process.cwd(), '.tmp/android_browser/'),
       // インスタンス毎に保存するフォルダを分けるかどうか
       savePerInstance: true,
       // 基準となる画像を自動で保存するかどうか
