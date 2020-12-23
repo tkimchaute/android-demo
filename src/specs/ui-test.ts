@@ -6,7 +6,7 @@ import { expect } from 'chai';
 // process.env.PASSWORD = 'test'
 
 const appID = 717;
-describe('Index', () => {
+describe.only('Index', () => {
   before(() => {
     browser.url(`https://${process.env.DOMAIN}/k/m/${appID}`);
     browser.$("div.form-username-slash input[name='username']").setValue(`${process.env.USERNAME}`);
@@ -29,7 +29,7 @@ describe('Index', () => {
     // browser.saveTabbablePage('index-tabbable',{});
   });
 
-  it('should compare successful with a baseline', () => {
+  it.skip('should compare successful with a baseline', () => {
     // Check a full page screenshot
     expect(browser.checkFullPageScreen('index-fullPage', {})).to.equal(0);
 
