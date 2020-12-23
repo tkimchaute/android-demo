@@ -63,6 +63,7 @@ jobs:
         run: npm install
 
       - name: Run test script
+        id: testkuc
         run: npm run test
         continue-on-error: true
 
@@ -77,3 +78,7 @@ jobs:
         with:
           name: result
           path: .tmp
+
+      - name: Check on failures
+        if: (${{ success() }} || ${{ failure() }}) && (${{ steps.testkuc.outcome }} == 'failure')
+        run: exit 1
